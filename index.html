@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0e0d0c" />
+    <meta name="description" content="Afinador cromático con temperamentos históricos y lectura precisa en tiempo real." />
+    <title>Afinador cromático | Tono</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./src/main.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Tono, inicio">
+          <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v16m0-8h14m0-8v16" /></svg>
+          <span>Tono</span>
+        </a>
+        <span class="topbar-note">Afinador cromático</span>
+      </header>
+
+      <main class="tuner" aria-labelledby="page-title">
+        <section class="instrument" aria-label="Afinador en tiempo real">
+          <div class="instrument-heading">
+            <div>
+              <h1 id="page-title">Afinador</h1>
+            </div>
+            <span class="live-state" id="liveIndicator"><span class="live-dot"></span><span id="liveLabel">En pausa</span></span>
+          </div>
+
+          <div class="dial-frame">
+            <canvas id="dial" role="img" aria-label="Indicador de afinación, centrado. Activa el micrófono para detectar una nota."></canvas>
+          </div>
+
+          <div class="readout" aria-label="Lectura de afinación">
+            <div class="pitch">
+              <span class="pitch-note is-empty" id="noteName">···</span>
+              <span class="pitch-octave" id="noteOct" aria-label="octava"></span>
+            </div>
+            <div class="measurements">
+              <span class="frequency" id="hzOut">– <small>Hz</small></span>
+              <span class="cents" id="centsOut">– <small>¢</small></span>
+            </div>
+          </div>
+          <div class="target-line" id="targetOut">Objetivo <span>– Hz</span></div>
+          <p class="status-line" id="statusLine" role="status" aria-live="polite">Activa el micrófono y toca una nota</p>
+
+          <button class="mic-button" id="toggleMic" type="button">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="2.5" width="6" height="10" rx="3"/><path d="M4.5 9.5a5.5 5.5 0 0 0 11 0M10 15v3m-3 0h6"/></svg>
+            <span>Activar micrófono</span>
+          </button>
+          <p class="mic-note" id="micNote">El audio se procesa en este dispositivo.</p>
+        </section>
+
+        <section class="settings" aria-labelledby="settings-title">
+          <div class="section-heading">
+            <h2 id="settings-title">Ajustes de afinación</h2>
+          </div>
+          <div class="settings-grid">
+            <div class="field field-temperament">
+              <label for="temperament">Temperamento</label>
+              <select id="temperament">
+                <option value="equal">Igual · 12-TET</option>
+                <option value="just">Justa · 5-límite</option>
+                <option value="pythagorean">Pitagórica</option>
+                <option value="meantone">Mesotónica · ¼ coma</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="root">Tónica <span id="rootHint" class="field-hint" hidden>referencia</span></label>
+              <select id="root">
+                <option value="0">C</option><option value="1">C# / Db</option>
+                <option value="2">D</option><option value="3">D# / Eb</option>
+                <option value="4">E</option><option value="5">F</option>
+                <option value="6">F# / Gb</option><option value="7">G</option>
+                <option value="8">G# / Ab</option><option value="9" selected>A</option>
+                <option value="10">A# / Bb</option><option value="11">B</option>
+              </select>
+            </div>
+            <div class="field field-reference">
+              <label for="a4">Referencia <span>A4</span></label>
+              <div class="input-with-unit"><input id="a4" type="number" value="440" min="392" max="494" step="1" inputmode="numeric" /><span>Hz</span></div>
+              <span class="field-error" id="a4Error" aria-live="polite"></span>
+            </div>
+          </div>
+          <p class="settings-note">En temperamentos históricos, la tónica define la referencia de la escala.</p>
+        </section>
+
+        <footer class="footer">
+          <span>Tono <span aria-hidden="true">·</span> afinación consciente</span>
+          <span>Frecuencia de referencia <strong id="footerA4">440 Hz</strong></span>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>
